@@ -44,9 +44,9 @@ class User(object):
         rating = [checkin['rating_score'] for checkin in self.checkinData]
         return Counter(rating)
 
-    def CounterBuildRankingHistogram(self):
-        rankings = [country['rating_score'] for country in self.checkinData]
-        return Counter(rankings)
+    def BuildABVBins(self):
+        abvBins = [round(float(checkin['beer_abv']) / .5) * .5 for checkin in self.checkinData]
+        return Counter(abvBins)
 
     def BuildDayBins(self):
         hourBins = [datetime.datetime.strftime(checkin, "%a") for checkin in self.tupleCheckinDates]

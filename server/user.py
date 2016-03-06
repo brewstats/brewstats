@@ -1,5 +1,5 @@
 import datetime
-
+from collections import Counter
 
 class User(object):
 
@@ -18,6 +18,8 @@ class User(object):
         self.rankingHistogram = self.BuildRankingHistogram()
         self.dayBins = self.BuildDayBins()
         self.hourBins = self.BuildHourBins()
+        self.countryBins = self.BuildBreweryCountryBins()
+        self.usStateBins = self.BuildUSStateBins()
 
     def ReturnTotalCheckins(self):
         return len(self.checkinData)
@@ -35,34 +37,29 @@ class User(object):
         return [int(checkin.timestamp()) for checkin in self.tupleCheckinDates]
 
     def BuildRankingHistogram(self):
-        ratingBins = {'': 0, '0': 0, '0.25': 0, '0.5': 0, '0.75': 0, '1': 0, '1.25': 0,
-                      '1.5': 0, '1.75': 0, '2': 0, '2.25': 0, '2.5': 0, '2.75': 0, '3': 0,
-                      '3.25': 0, '3.5': 0, '3.75': 0, '4': 0, '4.25': 0, '4.5': 0, '4.75': 0, '5': 0, 'error': 0}
+        rating = [checkin['rating_score'] for checkin in self.checkinData]
+        return Counter(rating)
 
-        for checkin in self.checkinData:
-            try:
-                ratingBins[checkin['rating_score']] += 1
-            except:
-                ratingBins['error'] += 1
-                print("Could not grab rating!")
-
-        return ratingBins
+    def CounterBuildRankingHistogram(self):
+        rankings = [country['rating_score'] for country in self.checkinData]
+        return Counter(rankings)
 
     def BuildDayBins(self):
-        dayBins = {'Mon': 0, 'Tue': 0, 'Wed': 0,
-                   'Thu': 0, 'Fri': 0, 'Sat': 0, 'Sun': 0}
-
-        for checkin in self.tupleCheckinDates:
-            dayBins[datetime.datetime.strftime(checkin, "%a")] += 1
-
-        return dayBins
+        hourBins = [datetime.datetime.strftime(checkin, "%a") for checkin in self.tupleCheckinDates]
+        return Counter(hourBins)
 
     def BuildHourBins(self):
-        hourBins = {'00': 0, '01': 0, '02': 0, '03': 0, '04': 0, '05': 0, '06': 0, '07': 0,
-                    '08': 0, '09': 0, '10': 0, '11': 0, '12': 0, '13': 0, '14': 0, '15': 0,
-                    '16': 0, '17': 0, '18': 0, '19': 0, '20': 0, '21': 0, '22': 0, '23': 0}
+        hourBins = [datetime.datetime.strftime(checkin, "%H") for checkin in self.tupleCheckinDates]
+        return Counter(hourBins)
 
-        for checkin in self.tupleCheckinDates:
-            hourBins[datetime.datetime.strftime(checkin, "%H")] += 1
+    def BuildBreweryCountryBins(self):
+        breweryCountryBins = [checkin['brewery_country'] for checkin in self.checkinData]
+        return Counter(breweryCountryBins)
 
-        return hourBins
+    def BuildUSStateBins(self):
+        stateBins = [checkin['brewery_state'] for checkin in self.checkinData if 'United States' in checkin['brewery_country']]
+        return Counter(stateBins)
+
+    def BuildBeerStyleBins(self):
+        beerStyleBins = [checkin['beer_type'] for checkin in self.checkinData]
+        return Counter(beerStyleBins)

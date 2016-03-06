@@ -20,6 +20,10 @@ class User(object):
         self.hourBins = self.BuildHourBins()
         self.countryBins = self.BuildBreweryCountryBins()
         self.usStateBins = self.BuildUSStateBins()
+        self.beerStyleBins = self.BuildBeerStyleBins()
+        self.venueNameBins = self.BuildVenueNameBins()
+        self.venueStateBins = self.BuildVenueStateBins()
+        self.venueCityBins = self.BuildVenueCityBins()
 
     def ReturnTotalCheckins(self):
         return len(self.checkinData)
@@ -63,3 +67,15 @@ class User(object):
     def BuildBeerStyleBins(self):
         beerStyleBins = [checkin['beer_type'] for checkin in self.checkinData]
         return Counter(beerStyleBins)
+
+    def BuildVenueNameBins(self):
+        venueNameBins = [checkin['venue_name'] for checkin in self.checkinData]
+        return Counter(venueNameBins)
+
+    def BuildVenueStateBins(self):
+        venueStateBins = [checkin['venue_state'] for checkin in self.checkinData]
+        return Counter(venueStateBins)
+
+    def BuildVenueCityBins(self):
+        venueCityBins = [checkin['venue_city'] for checkin in self.checkinData]
+        return Counter(venueCityBins)

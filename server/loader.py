@@ -10,7 +10,7 @@ pp.pprint(parsedUser.BuildABVBins())
 
 output = [{
     'totalCheckins': parsedUser.totalCheckins,
-    'rankingHistogram': parsedUser.rankingHistogram,
+    'rankingBins': parsedUser.rankingBins,
     'dayBins': parsedUser.dayBins,
     'hourBins': parsedUser.hourBins,
     'countryBins': parsedUser.countryBins,
@@ -20,7 +20,8 @@ output = [{
     'venueStateBins': parsedUser.venueStateBins,
     'venueCityBins': parsedUser.venueCityBins,
     'checkinRatings': parsedUser.checkinRatings,
-    'epochCheckinDates': parsedUser.epochCheckinDates
+    'epochCheckinDates': parsedUser.epochCheckinDates,
+    'abvBins': parsedUser.abvBins
 }]
 
 with open('checkin-report-summary.json', 'w') as f:

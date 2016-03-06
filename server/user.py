@@ -41,41 +41,31 @@ class User(object):
         return [int(checkin.timestamp()) for checkin in self.tupleCheckinDates]
 
     def BuildRankingHistogram(self):
-        rating = [checkin['rating_score'] for checkin in self.checkinData]
-        return Counter(rating)
+        return Counter([checkin['rating_score'] for checkin in self.checkinData])
 
     def BuildABVBins(self):
-        abvBins = [round(float(checkin['beer_abv']) / .5) * .5 for checkin in self.checkinData]
-        return Counter(abvBins)
+        return Counter([round(float(checkin['beer_abv']) / .5) * .5 for checkin in self.checkinData])
 
     def BuildDayBins(self):
-        hourBins = [datetime.datetime.strftime(checkin, "%a") for checkin in self.tupleCheckinDates]
-        return Counter(hourBins)
+        return Counter([datetime.datetime.strftime(checkin, "%a") for checkin in self.tupleCheckinDates])
 
     def BuildHourBins(self):
-        hourBins = [datetime.datetime.strftime(checkin, "%H") for checkin in self.tupleCheckinDates]
-        return Counter(hourBins)
+        return Counter([datetime.datetime.strftime(checkin, "%H") for checkin in self.tupleCheckinDates])
 
     def BuildBreweryCountryBins(self):
-        breweryCountryBins = [checkin['brewery_country'] for checkin in self.checkinData]
-        return Counter(breweryCountryBins)
+        return Counter([checkin['brewery_country'] for checkin in self.checkinData])
 
     def BuildUSStateBins(self):
-        stateBins = [checkin['brewery_state'] for checkin in self.checkinData if 'United States' in checkin['brewery_country']]
-        return Counter(stateBins)
+        return Counter([checkin['brewery_state'] for checkin in self.checkinData if 'United States' in checkin['brewery_country']])
 
     def BuildBeerStyleBins(self):
-        beerStyleBins = [checkin['beer_type'] for checkin in self.checkinData]
-        return Counter(beerStyleBins)
+        return Counter([checkin['beer_type'] for checkin in self.checkinData])
 
     def BuildVenueNameBins(self):
-        venueNameBins = [checkin['venue_name'] for checkin in self.checkinData]
-        return Counter(venueNameBins)
+        return Counter([checkin['venue_name'] for checkin in self.checkinData])
 
     def BuildVenueStateBins(self):
-        venueStateBins = [checkin['venue_state'] for checkin in self.checkinData]
-        return Counter(venueStateBins)
+        return Counter([checkin['venue_state'] for checkin in self.checkinData])
 
     def BuildVenueCityBins(self):
-        venueCityBins = [checkin['venue_city'] for checkin in self.checkinData]
-        return Counter(venueCityBins)
+        return Counter([checkin['venue_city'] for checkin in self.checkinData])

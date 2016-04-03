@@ -1,16 +1,12 @@
 import json
 import user
-import pprint
 
 with open('checkin-report_03_05_16.json') as data_file:
     parsedUser = user.User(json.load(data_file))
 
-pp = pprint.PrettyPrinter()
-pp.pprint(parsedUser.BuildABVBins())
-
-output = [{
+output = {
     'totalCheckins': parsedUser.totalCheckins,
-    'rankingBins': parsedUser.rankingBins,
+    'ratingBins': parsedUser.ratingBins,
     'dayBins': parsedUser.dayBins,
     'hourBins': parsedUser.hourBins,
     'countryBins': parsedUser.countryBins,
@@ -22,7 +18,7 @@ output = [{
     'checkinRatings': parsedUser.checkinRatings,
     'epochCheckinDates': parsedUser.epochCheckinDates,
     'abvBins': parsedUser.abvBins
-}]
+}
 
 with open('checkin-report-summary.json', 'w') as f:
     json.dump(output, f)

@@ -10,6 +10,7 @@ class User(object):
 
         # Summary Counts
         self.totalCheckins = self.ReturnTotalCheckins()
+        self.firstBeer = self.ReturnFirstBeer()
 
         # Processed raw data
         self.checkinRatings = self.ReturnCheckinRatings()
@@ -19,6 +20,7 @@ class User(object):
         self.abvValues = self.ReturnABVValues()
 
         # Binned data
+        self.abvBins = self.BuildABVBins()
         self.ratingBins = self.BuildRatingBins()
         self.dayBins = self.BuildDayBins()
         self.hourBins = self.BuildHourBins()
@@ -28,7 +30,6 @@ class User(object):
         self.venueNameBins = self.BuildVenueNameBins()
         self.venueStateBins = self.BuildVenueStateBins()
         self.venueCityBins = self.BuildVenueCityBins()
-        self.
 
     # Processed Raw Data
     def ReturnCheckinRatings(self):
@@ -63,7 +64,7 @@ class User(object):
     # Binned Data
     def BuildRatingBins(self):
         """Returns count of all rating instances as dict."""
-        return Counter([checkin['rating_score'] for checkin in self.checkinData])
+        return Counter([checkin['rating_score'] for checkin in self.checkinData if checkin['rating_score'] is not ''])
 
     def BuildABVBins(self):
         """Returns count of all ABV instances as dict, rounded to nearest 0.5."""
